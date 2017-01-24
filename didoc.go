@@ -23,7 +23,7 @@ func main() {
 	}
 
 	var docType DocType = TEXT
-	docTypeStr, ok := image.ContainerConfig.Labels["docs.type"]
+	docTypeStr, ok := image.ContainerConfig.Labels["didoc.docs.type"]
 	if ok {
 		var err error
 		docType, err = GetDocType(docTypeStr)
@@ -32,7 +32,7 @@ func main() {
 		}
 	}
 
-	url, ok := image.ContainerConfig.Labels["docs.url"]
+	url, ok := image.ContainerConfig.Labels["didoc.docs.url"]
 	if !ok {
 		panic(errors.New("Cannot read doc url"))
 	}

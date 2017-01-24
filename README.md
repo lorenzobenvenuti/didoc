@@ -26,8 +26,8 @@ My Image is just a test image. You can use the following environment variables:
 
 In your `Dockerfile` you can use the `LABEL` directive to define two labels:
 
-* `dido.docs.url`: the url used to retrieve the documentation.
-* `dido.docs.type`: specifies the documentation type. Supported values are `txt`, `md`, `html` (default: `txt`)
+* `didoc.docs.url`: the url used to retrieve the documentation.
+* `didoc.docs.type`: specifies the documentation type. Supported values are `txt`, `md`, `html` (default: `txt`)
 
 
 ## TODO

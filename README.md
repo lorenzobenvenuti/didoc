@@ -43,5 +43,4 @@ My Image is just a test image. You can use the following environment variables:
 ## TODO
 
 * Better error handling
-* Specify different label names in the arguments
 * Colors in output?

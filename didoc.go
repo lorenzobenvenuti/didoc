@@ -2,9 +2,9 @@ package main
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 
 	"github.com/docker/docker/client"
@@ -17,57 +17,49 @@ var (
 	imageID   = kingpin.Arg("image", "Image name or id").Required().String()
 )
 
+func handleErr(err error) {
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
 func main() {
 
-	kingpin.Version("0.1")
+	kingpin.Version("0.2.0")
 	kingpin.Parse()
 
 	cli, err := client.NewEnvClient()
-	if err != nil {
-		panic(err)
-	}
+	handleErr(err)
 
 	image, _, err := cli.ImageInspectWithRaw(context.Background(), *imageID)
-	if err != nil {
-		panic(err)
-	}
+	handleErr(err)
 
 	var docType = TEXT
 	docTypeStr, ok := image.ContainerConfig.Labels[*typeLabel]
 	if ok {
 		docType, err = GetDocType(docTypeStr)
-		if err != nil {
-			panic(err)
-		}
+		handleErr(err)
 	}
 
 	url, ok := image.ContainerConfig.Labels[*urlLabel]
 	if !ok {
-		panic(errors.New("Cannot read doc url"))
+		handleErr(fmt.Errorf("Cannot read label %s", *urlLabel))
 	}
 
 	resp, err := http.Get(url)
-	if err != nil {
-		panic(err)
-	}
+	handleErr(err)
 	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		panic(err)
-	}
+	handleErr(err)
 
 	renderer, err := NewRenderer(docType)
-	if err != nil {
-		panic(err)
-	}
+	handleErr(err)
 
 	doc, err := renderer.render(string(body))
 
-	if err != nil {
-		panic(err)
-	}
+	handleErr(err)
 
-	fmt.Printf("%s\n", doc)
+	fmt.Printf("\n%s\n\n", doc)
 
 }

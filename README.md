@@ -7,7 +7,7 @@ Documentation is linked to an image declaring two `LABEL`s in the `Dockerfile`:
 * `didoc.docs.url`: the url used to retrieve the documentation.
 * `didoc.docs.type`: specifies the documentation type. Supported values are `txt`, `md`, `html` (default: `txt`)
 
-Label names can be different; you can specify them using command line options `--url-label` and `--type-label`.
+Different label names can be specified using command line options `--url-label` and `--type-label`.
 
 ## Usage
 
